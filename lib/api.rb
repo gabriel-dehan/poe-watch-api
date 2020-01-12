@@ -34,20 +34,34 @@ module PoeWatch
     @redis = $redis 
 
     class << self  
+      # Returns the redis instance, defaults to the global $redis
       def redis
         raise PoeWatch::Api::Error.new("You need to configure redis by either setting the global $redis variable or calling PoeWatchApi.redis = Redis.new(...)") unless @redis
-        @redis
+        @redis || $redis
       end
 
+      # Sets the redis instance
       def redis=(redis)
         @redis = redis
       end
       
+      # Public: Count the number of items
+      #
+      # expiry - The time to live (TTL) for the redis cache, defaults to 45 minutes.
+      #
+      # Examples
+      #
+      #  PoeWatch::Api.refresh!
+      #  PoeWatch::Api.refresh!(3600) # => 1 hour cache
+      # 
+      # Returns an Integer.
       def refresh!(expiry = DEFAULT_EXPIRY)
+        # If we are not already updating and the cache is empty
         if !@updating && !ready?
           #puts "Updating..."
           @updating = true
 
+          # Fetch each API
           BULK_APIS.each do |name, api_url|
             raw_response = request(api_url)
             redis.set(redis_key(name), raw_response) 
@@ -61,6 +75,17 @@ module PoeWatch
         end
       end
 
+      # Internal: Does a get request
+      #
+      # api - api url
+      # params - a hash of params
+      # parse - if the data should be parsed as JSON or returned as String. Defaults to false.
+      #
+      # Examples
+      #
+      #  PoeWatch::Api.request(BULK_APIS[:leagues])
+      # 
+      # Returns a String or a Hash.
       def request(api, params = {}, parse = false) 
         uri = URI.parse(api)
 
@@ -81,31 +106,37 @@ module PoeWatch
         parse ? JSON.parse(response.body) : response.body
       end
 
+      # Returns all items
       def items
         @items ||= get_data(:item_data)
         @items || []
       end
 
+      # Returns all categories
       def categories
         @categories ||= get_data(:categories)
         @categories || []
       end
 
+      # Returns all leagues
       def leagues
         @leagues ||= get_data(:leagues)
         @leagues || []
       end
       
+      # Get data from redis and parse it to JSON
       def get_data(type)
         data = redis.get(redis_key(type))
         data ? JSON.parse(data) : nil
       end
 
+      # Clear the redis cache
       def clear!
         BULK_APIS.keys
         .each { |key| redis.del(redis_key(key)) }
       end
       
+      # Is the cache filled?
       def ready?
         !has_expired?
       end
@@ -118,10 +149,12 @@ module PoeWatch
           .empty?
       end
 
+      # Returns the redis cache key, e.g: poe_watch_itemdata, etc...
       def redis_key(type)
         "poe_watch_#{type}"
       end
 
+      # Returns the redis memory footprint for each api data (leagues, itemdata and categories) in kilobytes.
       def memory_footprint
         BULK_APIS.keys.map do |key| 
           size = nil

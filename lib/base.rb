@@ -65,6 +65,28 @@ module PoeWatch
         end
       end
 
+      # Public: Count the number of items
+      #
+      # Examples
+      #
+      #  PoeWatch::League.count # => 30
+      # 
+      # Returns an Integer.
+      def count
+        PoeWatch::Api.refresh!
+        
+        return __data if __data.any?
+        
+        # If data isn't already loaded
+        # puts "Loading #{type} data..."
+        json_data = PoeWatch::Api.send(INFLECTOR[type])
+        if json_data.any?
+          __data = json_data.length
+        else
+          0
+        end
+      end
+
       # Public: Gets items filtered by a query
       # You can pass regular expressions for string parameters. It will do a match.
       #
