@@ -121,8 +121,8 @@ items.first.name # => "Hubris Circlet"
 item = PoeWatch::Item.find(name: "Circle of Nostalgia") # Returns the item "Circle of Nostalgia"
 item = PoeWatch::Item.find(name: /circle/i) # Returns the first item with a name containing "circle"
 
-items.id # => 223
-items.name # => "Hubris Circlet"
+item.id # => 223
+item.name # => "Hubris Circlet"
 ```
 
 #### Item properties
