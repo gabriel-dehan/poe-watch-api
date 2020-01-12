@@ -4,6 +4,35 @@ A Ruby wrapper around the [poe.watch API](https://poe.watch/api). It implements 
 
 Inspired by [klayveR's poe-watch-api JS wrapper](https://github.com/klayveR/poe-watch-api).
 
+## Table of content 
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Dependencies](#dependencies)
+- [Usage](#usage)
+  * [Item](#item)
+    + [Get all item data](#get-all-item-data)
+    + [Get multiple specific items](#get-multiple-specific-items)
+    + [Find one specific item](#find-one-specific-item)
+    + [Item properties](#item-properties)
+  * [Item price data](#item-price-data)
+    + [Price data properties](#price-data-properties)
+  * [League](#league)
+    + [Get all league data](#get-all-league-data)
+    + [Get multiple specific leagues](#get-multiple-specific-leagues)
+    + [Find one specific league](#find-one-specific-league)
+    + [League properties](#league-properties)
+  * [Categories](#categories)
+    + [Get all categories data](#get-all-categories-data)
+    + [Get multiple specific categories](#get-multiple-specific-categories)
+    + [Find one specific category](#find-one-specific-category)
+    + [Category properties](#category-properties)
+  + [API](#api)
+- [Shortcomings](#shortcomings)
+- [Contribution](#contribution)
+- [License](#license)
+
+
 ## Requirements
 
 - Redis: 4.0+
@@ -101,27 +130,67 @@ items.name # => "Hubris Circlet"
 All properties have an accessor you can use, e.g: `item.id`, `item.name`, `item.hardcore`. 
 All boolean properties have an additionnal question mark accessor, e.g:  `item.hardcore?`.
 
-Some items may not have all the properties.
+Items only have relevant properties (e.g: map tiers only on maps, stack_size only on currencies, etc...)
 
-| Name | Type | Description |
-| --- | --- | --- |
-| id | `number` | poe.watch ID |
-| name | `string` | name |
-| type | `string` | base type |
-| frame | `number` | frame type |
-| tier | `number` | map tier |
-| gem_level | `number` | gem level |
-| gem_quality | `number` | gem quality |
-| gem_is_corrupted | `boolean` | is the gem corrupted |
-| corrupted | `boolean` | is the item corrupted |
-| links | `number` | links count |
-| ilvl | `number` | item level |
-| var | `string` | variations |
-| relic | `number` | whether the item is a relic or not. `true` always sets `properties.frame` to `9` |
-| icon | `string` | icon URL |
-| category | `string` | item category |
-| group | `string` | item category group |
-| influences | `array` | conqueror influences |
+| Name        | Type      | Description  |
+| ----------- | --------- | ------------ |
+| id          | `Integer` | poe.watch ID |
+| name        | `String`  | name |
+| type        | `String`  | base type |
+| category    | `String`  | item category |
+| group       | `String`  | item category group |
+| frame       | `Integer` | frame type (item rarity) |
+| map_series  | `Integer` | 5 for Synthesis, 1 for Awakening, etc |
+| map_tier    | `Integer` | map tier |
+| gem_level   | `Integer` | gem level |
+| gem_quality | `Integer` | gem quality |
+| gem_is_corrupted | `Boolean` | is the gem corrupted |
+| link_count  | `Integer` | links count |
+| base_item_level | `Integer` | item level |
+| variation   | `String`  | variations of the same item (e.g: Vessel of Vinktar) |
+| enchant_min |	`Integer` | enchantment's minimum has numeric value
+| enchant_max |	`Integer` | enchantment's maximum has numeric value
+| relic       | `Integer` | whether the item is a relic or not. `true` always sets `properties.frame` to `9` |
+| icon        | `String`  | icon URL |
+| influences  | `Array`   | shaper / elder / conqueror influences |
+| stack_size  | `Integer` | default stack size of item type |
+
+
+### Item price data
+
+```ruby
+item = PoeWatch::Item.find(name: "Circle of Nostalgia")
+
+# Returns price data for all leagues
+item.prices
+
+# Returns price data for all leagues matching the name
+item.price_for_leagues("Metamorph") # => all metamorph leagues (HC / SC) price data
+
+# Returns price data for a specific league
+item.price_for_leagues("Metamorph") # => Price data for "Metamorph"
+item.price_for_leagues(/metamorph/i) # => Price data for the first metamorph league found
+```
+
+#### Price data properties
+
+| Name        | Type      | Description  |
+| ----------- | --------- | ------------ |
+| id          | `Integer` | league ID |
+| name        | `String`  | league name |
+| display     | `String`  | league display name |
+| current     | `Integer` | nb of items currently on sale |
+| daily       | `Integer` | nb of items found per 24h |
+| accepted    | `Integer` | nb of items accepted for price calculation |
+| exalted     | `Float`   | mean price in exalted |
+| max         | `Float`   | max accepted average price |
+| min         | `Float`   | min accepted average price |
+| mean        | `Float`   | mean average price |
+| median      | `Float`   | median average price |
+| mode        | `Float`   | mode average price |
+| active      | `Boolean` | is league still active |
+| start       | `String`  | league end date |
+| end         | `String`  | league end date |
 
 ### League
 

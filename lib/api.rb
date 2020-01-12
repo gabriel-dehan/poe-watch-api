@@ -1,3 +1,11 @@
+# TODO: Check item fields
+# @base_is_elder=false,
+# @base_is_shaper=true,
+# @base_item_level=86,
+# @enchant_max=25,
+# @enchant_min=25,
+# corrupted field
+
 require 'redis'
 require 'uri'
 require 'net/http'
@@ -24,9 +32,7 @@ module PoeWatch
       leagues: "https://api.poe.watch/leagues",
     }
 
-    ITEM_API = {
-      item: "https://api.poe.watch/item",
-    }
+    ITEM_API = "https://api.poe.watch/item"
 
     DEFAULT_EXPIRY = 45 * 60 # 45 minutes
     
@@ -36,7 +42,7 @@ module PoeWatch
     class << self  
       # Returns the redis instance, defaults to the global $redis
       def redis
-        raise PoeWatch::Api::Error.new("You need to configure redis by either setting the global $redis variable or calling PoeWatchApi.redis = Redis.new(...)") unless @redis
+        raise PoeWatch::Api::Error.new("You need to configure redis by either setting the global $redis variable or calling PoeWatchApi.redis = Redis.new(...)") unless (@redis || $redis)
         @redis || $redis
       end
 
