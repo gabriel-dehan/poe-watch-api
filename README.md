@@ -89,7 +89,7 @@ The default time to live (TTL) of the cache is 45 minutes.
 ## Usage
 
 Here is a simple usage example:
-```
+```ruby
 # See the dependencies section
 PoeWatch::Api.redis = Redis.new
 
