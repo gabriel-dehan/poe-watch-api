@@ -27,7 +27,7 @@ Inspired by [klayveR's poe-watch-api JS wrapper](https://github.com/klayveR/poe-
     + [Get multiple specific categories](#get-multiple-specific-categories)
     + [Find one specific category](#find-one-specific-category)
     + [Category properties](#category-properties)
-  + [API](#api)
+  + [API Cache](#api-cache)
 - [Shortcomings](#shortcomings)
 - [Contribution](#contribution)
 - [License](#license)
@@ -275,7 +275,7 @@ All properties have an accessor you can use, e.g: `category.name`, `category.gro
 |display   | `String`  | display name |
 |groups    | `Array<OpenStruct>`    | an array of item types that belongs to this category. Stored as OpenStructs so you can access them with the `.` syntax. A group has 3 attributes: `id`, `name` and `display` |
 
-### API
+### API Cache
 
 ```ruby
 # Fetch all the data from poe.watch API and cache it for the next 45 minutes.
