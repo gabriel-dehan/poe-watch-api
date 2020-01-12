@@ -10,14 +10,14 @@ Inspired by [klayveR's poe-watch-api JS wrapper](https://github.com/klayveR/poe-
 - [Installation](#installation)
 - [Dependencies](#dependencies)
 - [Usage](#usage)
-  * [Item](#item)
+  * [Items](#items)
     + [Get all item data](#get-all-item-data)
     + [Get multiple specific items](#get-multiple-specific-items)
     + [Find one specific item](#find-one-specific-item)
     + [Item properties](#item-properties)
   * [Item price data](#item-price-data)
     + [Price data properties](#price-data-properties)
-  * [League](#league)
+  * [Leagues](#leagues)
     + [Get all league data](#get-all-league-data)
     + [Get multiple specific leagues](#get-multiple-specific-leagues)
     + [Find one specific league](#find-one-specific-league)
@@ -99,7 +99,7 @@ PoeWatch::Api.refresh!(3600) # cache for 1 hour
 PoeWatch::Item.find({ name: "Circle of Nostalgia }).price_for_league('Metamorph')
 ```
 
-### Item
+### Items
 
 #### Get all item data
 
@@ -192,7 +192,7 @@ item.price_for_leagues(/metamorph/i) # => Price data for the first metamorph lea
 | start       | `String`  | league end date |
 | end         | `String`  | league end date |
 
-### League
+### Leagues
 
 #### Get all league data
 
