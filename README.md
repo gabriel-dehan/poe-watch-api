@@ -50,6 +50,12 @@ or add it to your `Gemfile`
 gem 'poe-watch-api'
 ```
 
+Then 
+
+```ruby
+require 'poe_watch'
+```
+
 ## Dependencies
 
 This library has a dependency over `redis`. For it to work you need to have redis installed on your machine (and your server, in production, if using Heroku, you can use an addon like `rediscloud`).
@@ -90,6 +96,8 @@ The default time to live (TTL) of the cache is 45 minutes.
 
 Here is a simple usage example:
 ```ruby
+require 'poe_watch'
+
 # See the dependencies section
 PoeWatch::Api.redis = Redis.new
 
