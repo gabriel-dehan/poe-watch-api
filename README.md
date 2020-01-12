@@ -53,7 +53,7 @@ gem 'poe-watch-api'
 ## Dependencies
 
 This library has a dependency over `redis`. For it to work you need to have redis installed on your machine (and your server, in production, if using Heroku, you can use an addon like `rediscloud`).
-We use `redis` because we need to cache the data from Poe Watch to avoid refetching all the items data to often (there are almost 30k items in PoE which is quite a lot). 
+We use `redis` because we need to cache the data from Poe Watch to avoid refetching all the items data too often (there are almost 30k items in PoE which is quite a lot). 
 
 There are two ways of making this gem work with redis: 
 
@@ -301,7 +301,7 @@ PoeWatch::Api.ready?
 
 ## Contribution
 
-The code is well documented, using [tomdoc](http://tomdoc.org/), is you wish to contribute, raise an issue or fork this project and create a pull request :).
+The code is well documented, using [tomdoc](http://tomdoc.org/), if you wish to contribute, raise an issue or fork this project and create a pull request :).
 
 Most of the codebase is in `lib/api`, `lib/base` and `lib/item`.
 
