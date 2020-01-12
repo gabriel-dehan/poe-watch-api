@@ -127,8 +127,8 @@ item.name # => "Hubris Circlet"
 
 #### Item properties
 
-All properties have an accessor you can use, e.g: `item.id`, `item.name`, `item.hardcore`. 
-All boolean properties have an additionnal question mark accessor, e.g:  `item.hardcore?`.
+All properties have an accessor you can use, e.g: `item.id`, `item.name`, `item.category`. 
+All boolean properties have an additionnal question mark accessor, e.g:  `item.gem_is_corrupted?`.
 
 Items only have relevant properties (e.g: map tiers only on maps, stack_size only on currencies, etc...)
 
@@ -214,7 +214,7 @@ leagues.first.start? # => "2019-12-13T20:00:00Z"
 #### Find one specific league
 ```ruby
 league = PoeWatch::League.find(name: "Metamorph") # Return the non hardcore "Metamorph" league
-league = PoeWatch::League.find(name: /metamorph/i) # Will return the first Metamorph league found
+league = PoeWatch::League.find(name: /metamorph/i, hardcore: false) # Will return the first non hardcore Metamorph league found
 
 league.name # => "Metamorph"
 league.hardcore? # => false
