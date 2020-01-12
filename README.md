@@ -1,8 +1,8 @@
 # Poe Watch Ruby API
 
-A Ruby wrapper around the [https://poe.watch/api](poe.watch API). It implements the same DSL you are used to when using `ActiveRecord` but doesn't require Rails at all.
+A Ruby wrapper around the [poe.watch API](https://poe.watch/api). It implements the same DSL you are used to when using `ActiveRecord` but doesn't require Rails at all.
 
-Inspired by [https://github.com/klayveR/poe-watch-api](klayveR's poe-watch-api JS wrapper).
+Inspired by [klayveR's poe-watch-api JS wrapper](https://github.com/klayveR/poe-watch-api).
 
 ## Requirements
 
