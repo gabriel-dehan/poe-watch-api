@@ -101,6 +101,8 @@ items.name # => "Hubris Circlet"
 All properties have an accessor you can use, e.g: `item.id`, `item.name`, `item.hardcore`. 
 All boolean properties have an additionnal question mark accessor, e.g:  `item.hardcore?`.
 
+Some items may not have all the properties.
+
 | Name | Type | Description |
 | --- | --- | --- |
 | id | `number` | poe.watch ID |
@@ -108,8 +110,9 @@ All boolean properties have an additionnal question mark accessor, e.g:  `item.h
 | type | `string` | base type |
 | frame | `number` | frame type |
 | tier | `number` | map tier |
-| lvl | `number` | level (e.g: gem level) |
-| quality | `number` | quality (e.g: gem quality) |
+| gem_level | `number` | gem level |
+| gem_quality | `number` | gem quality |
+| gem_is_corrupted | `boolean` | is the gem corrupted |
 | corrupted | `boolean` | is the item corrupted |
 | links | `number` | links count |
 | ilvl | `number` | item level |
