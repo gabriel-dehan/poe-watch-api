@@ -1,0 +1,19 @@
+PATH
+  remote: .
+  specs:
+    poe-watch-api (1.0.0)
+      redis (>= 4.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    redis (4.1.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  poe-watch-api!
+
+BUNDLED WITH
+   2.1.3
