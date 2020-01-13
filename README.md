@@ -104,7 +104,7 @@ PoeWatch::Api.redis = Redis.new
 # Non mandatory
 PoeWatch::Api.refresh!(3600) # cache for 1 hour
 
-PoeWatch::Item.find({ name: "Circle of Nostalgia }).price_for_league('Metamorph')
+PoeWatch::Item.find({ name: "Circle of Nostalgia" }).price_for_league('Metamorph')
 ```
 
 ### Items
