@@ -29,6 +29,7 @@ module PoeWatch
 
       # Setter for instance variable
       def __data=(value)
+        puts "SETTING @__data"
         @__data = value
       end
 
@@ -52,14 +53,15 @@ module PoeWatch
       # Returns an Array of class instances.
       def all
         PoeWatch::Api.refresh!
-        
+
         return __data if __data.any?
-        
+        puts "PAST DATA"
         # If data isn't already loaded
         # puts "Loading #{type} data..."
         json_data = PoeWatch::Api.send(INFLECTOR[type])
         if json_data.any?
-          __data = json_data.map { |raw_data| self.new(raw_data) }
+          self.__data = json_data.map { |raw_data| self.new(raw_data) }
+          __data
         else
           []
         end

@@ -34,7 +34,7 @@ module PoeWatch
 
     ITEM_API = "https://api.poe.watch/item"
 
-    DEFAULT_EXPIRY = 45 * 60 # 45 minutes
+    DEFAULT_EXPIRY = 86400 # 1 day
     
     @updating = false
     @redis = $redis 

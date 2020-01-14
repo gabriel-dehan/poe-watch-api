@@ -90,7 +90,7 @@ end
 ```
 
 The total footprint of the data from PoeWatch API in redis is a bit less than **2 megabytes**. You can check the exact memory footprint in your redis by calling `PoeWatch::Api.memory_footprint`, the data will be displayed in kilobytes.
-The default time to live (TTL) of the cache is 45 minutes.
+The default time to live (TTL) of the cache is 1 day.
 
 ## Usage
 
@@ -286,11 +286,11 @@ All properties have an accessor you can use, e.g: `category.name`, `category.gro
 ### API Cache
 
 ```ruby
-# Fetch all the data from poe.watch API and cache it for the next 45 minutes.
+# Fetch all the data from poe.watch API and cache it for the next 1 day.
 # You don't actually need to call this. It is automatically called when using `::find`, `::where`, `::all` or `::count`, and won't do anything if the cache already contains data. 
-# Although beware that if you don't call it first, the first call to find/where/all/count every 45 minutes will take longer (around 2-4 seconds, there are quite a lot of items to fetch).
+# Although beware that if you don't call it first, the first call to find/where/all/count every 1 day will take longer (around 2-4 seconds, there are quite a lot of items to fetch).
 PoeWatch::Api.refresh! 
-# You can also specify a cache TTL different than 45 minutes
+# You can also specify a cache TTL different than 1 day
 PoeWatch::Api.refresh!(3600) # 1 hour cache
 
 # If you need to force clear the cache, you can use 
@@ -304,7 +304,7 @@ PoeWatch::Api.ready?
 
 ## Shortcomings
 
-- Doing a find or where on an item will always take some time (1-2 seconds) because it has to traverse all ~30k objects from PoE to find your matches. This could probably be optimised but I haven't had the time to get around to do it. 
+- When you want to fetch the price of an item, we do a request each time using the PoE API `/item` endpoint, which is not ideal. Ideally we'd want to use the `/compact` API for that but I haven't had the time to do that yet.
 - No rate limiter set for the moment so when fetching a bunch of item prices you could hit the rate limiter of `poe.watch`. I'll add one at some point in the future if is needed or requested.
 
 ## Contribution
